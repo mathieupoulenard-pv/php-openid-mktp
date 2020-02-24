@@ -21,7 +21,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $client = HttpClient::create();
 $openidConf = $client->request('GET', getenv('SF_LOGIN_URL').'/.well-known/openid-configuration');
 $openidConf = $openidConf->getContent();
-
+echo $openidConf;
 // Our web handlers
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
