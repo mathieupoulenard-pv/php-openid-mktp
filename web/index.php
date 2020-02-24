@@ -27,7 +27,7 @@ $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig', [
   		'test' => getenv('TEST'),
-  		'openid_conf' => $openidConf
+  		'openidConf' => $openidConf
   ]);
 });
 
