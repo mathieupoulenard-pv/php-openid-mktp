@@ -14,7 +14,6 @@ $openidParams = [
 	'redirect_url' => getenv('REDIRECT_URL')
 ];
 
-
 // Register the monolog logging service
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
   'monolog.logfile' => 'php://stderr',
