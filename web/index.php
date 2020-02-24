@@ -31,4 +31,5 @@ $app->get('/', function() use($app) {
   ]);
 });
 
+echo $openidConf;
 $app->run();
