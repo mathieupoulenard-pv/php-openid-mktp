@@ -1,5 +1,13 @@
 {% extends "layout.html" %}
 
+{% block connexion %}
+<ul class="nav navbar-nav navbar-right">
+      <li class="navbar-right">
+        <a href="{{ openidConfArray.authorization_endpoint }}?response_type=code&client_id={{ openidParams.client_id }}&redirect_uri={{ openidParams.redirect_url }}"><span class="glyphicon glyphicon-book"></span> Connexion</a>
+      </li>
+</ul>
+{% endblock %}
+
 {% block content %}
 <h1>Bienvenue sur la marketplace !</h1>
 
@@ -31,8 +39,12 @@
         Configuration connected app : <br/>
         {{ dump(openidParams) }}
         <br/>
+        <br/>
         Quelques paramètres : <br/>
-        {{ dump(openidConfArray.authorization_endpoint) }}
+        Authorization Endpoint : {{ dump(openidConfArray.authorization_endpoint) }} <br/>
+        Token Endpoint : {{ dump(openidConfArray.token_endpoint) }} <br/>
+        User Info Endpoint : {{ dump(openidConfArray.userinfo_endpoint) }} <br/>
+        <br/>
         <br/>
         Configuration : <br/>
         {{ dump(openidConf) }}
