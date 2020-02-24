@@ -7,6 +7,14 @@ use Symfony\Component\HttpClient\HttpClient;
 $app = new Silex\Application();
 $app['debug'] = true;
 
+$openidParams = [
+	'login_url' => getenv('SF_LOGIN_URL'),
+	'client_id' => getenv('CLIENT_ID'),
+	'client_secret' => getenv('CLIENT_SECRET'),
+	'redirect_url' => getenv('REDIRECT_URL')
+];
+
+
 // Register the monolog logging service
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
   'monolog.logfile' => 'php://stderr',
@@ -19,15 +27,15 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 
 $client = HttpClient::create();
-$openidConf = $client->request('GET', getenv('SF_LOGIN_URL').'/.well-known/openid-configuration');
+$openidConf = $client->request('GET', $openidParams['login_url'].'/.well-known/openid-configuration');
 
 // Our web handlers
-$app->get('/', function() use($app, $openidConf) {
+$app->get('/', function() use($app, $openidParams, $openidConf) {
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig', [
-  		'test' => getenv('TEST'),
-  		'openidConf' => $openidConf->toArray(),
-  		'conf' => $openidConf->getContent()
+  		'openidParams' => $openidParams,
+  		'openidConf' => $openidConf->getContent(),
+  		'openidConfArray' => $openidConf->toArray()
   ]);
 });
 

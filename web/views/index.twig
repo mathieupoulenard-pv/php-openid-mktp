@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Bienvenue sur la marketplace !</h1>
 
-<h2> This is env var TEST : {{ test }}</h2>
+<br/>
 
 <button type="button" class="btn btn-success"><a href="#">Je commande</a></button>
 
@@ -28,9 +28,15 @@
         </button>
       </div>
       <div class="modal-body">
+        Configuration connected app : <br/>
+        {{ dump(openidParams) }}
+        <br/>
+        Quelques paramètres : <br/>
+        {{ dump(openidConfArray.authorization_endpoint) }}
+        <br/>
+        Configuration : <br/>
         {{ dump(openidConf) }}
-//
-        {{ dump(conf) }}
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
