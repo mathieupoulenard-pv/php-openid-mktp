@@ -20,7 +20,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $client = HttpClient::create();
 $openidConf = $client->request('GET', getenv('SF_LOGIN_URL').'/.well-known/openid-configuration');
-$openidConf = $response->getContent();
+$openidConf = $openidConf->getContent();
 
 // Our web handlers
 $app->get('/', function() use($app) {
