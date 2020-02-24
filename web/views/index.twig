@@ -3,7 +3,7 @@
 {% block connexion %}
 <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">
-        <a href="{{ openidConfArray.authorization_endpoint }}?response_type=code&client_id={{ openidParams.client_id }}&redirect_uri={{ openidParams.redirect_url }}"><span class="glyphicon glyphicon-book"></span> Connexion</a>
+        <a href="{{ openidConfArray.authorization_endpoint }}?response_type=code&client_id={{ openidParams.client_id }}&redirect_uri={{ openidParams.redirect_url }}&state=hp"><span class="glyphicon glyphicon-book"></span> Connexion</a>
       </li>
 </ul>
 {% endblock %}
