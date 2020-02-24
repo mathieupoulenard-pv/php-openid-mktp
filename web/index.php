@@ -15,12 +15,14 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
-// Our web handlers
 
+$openidConf = file_get_contents(getenv('SF_LOGIN_URL').'/.well-known/openid-configuration');
+// Our web handlers
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig', [
-  		'test' => getenv('TEST')
+  		'test' => getenv('TEST'),
+  		'openid-conf' => $openidConf
   ]);
 });
 
