@@ -29,7 +29,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $session = new Session();
 $session->start();
-
+$app['session'] = $session;
 
 $client = HttpClient::create();
 $openidConf = $client->request('GET', $openidParams['login_url'].'/.well-known/openid-configuration');
