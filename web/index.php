@@ -26,6 +26,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
+$app->register(new Silex\Provider\SessionServiceProvider());
 
 $client = HttpClient::create();
 $openidConf = $client->request('GET', $openidParams['login_url'].'/.well-known/openid-configuration');
