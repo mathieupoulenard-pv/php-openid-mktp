@@ -90,7 +90,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 
   $app['monolog']->addDebug('user connected');
 
-    if ((null !== $show = $app['session']->get('prepareShow')) && (false !== $show = $app['session']->get('prepareShow')) {
+    if ((null !== $show = $app['session']->get('prepareShow')) && (false !== $show = $app['session']->get('prepareShow'))) {
       $app['monolog']->addDebug('no user');
         return $app->redirect('/prepare?show='.$app['session']->get('prepareShow'));
   }
