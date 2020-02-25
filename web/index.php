@@ -102,7 +102,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 $app->get('/logout', function(Request $request) use($app, $openidParams, $openidConf) {
 
   $app['monolog']->addDebug('logout');
-  $app['session']->destroy();
+  $app['session']->invalidate();
   return $app->redirect($openidConf->toArray()['end_session_endpoint']);
 });
 
