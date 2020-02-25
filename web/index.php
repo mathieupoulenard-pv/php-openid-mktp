@@ -48,11 +48,14 @@ $app->get('/', function() use($app, $openidParams, $openidConf) {
 $app->get('/callback', function(Request $request) use($app, $openidParams, $openidConf) {
   
   $app['monolog']->addDebug('callback output.');
+ /*
   if (null === $user = $app['session']->get('user')) {
   		$app['monolog']->addDebug('no session');
         return $app->redirect('/');
   }
+*/
 
+  
   dump($request);
   dump($request->query->get('code'));
   $username = 'toto';
