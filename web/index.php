@@ -5,6 +5,8 @@ require('../vendor/autoload.php');
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Silex\Provider\Session\SessionListener;
 
 $app = new Silex\Application();
 $app['debug'] = true;
