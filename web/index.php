@@ -61,6 +61,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
         return $app->redirect('/');
   }
 
+  $client = HttpClient::create();
   $tokenRespoense = $client->request('POST', $openidConf->toArray()['token_endpoint'], [
 
     
