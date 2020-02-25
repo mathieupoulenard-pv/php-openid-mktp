@@ -35,7 +35,12 @@ $client = HttpClient::create();
 $openidConf = $client->request('GET', $openidParams['login_url'].'/.well-known/openid-configuration');
 
 // Our web handlers
-$app->get('/', function() use($app, $openidParams, $openidConf) {
+$app->get('/', function(Request $request) use($app, $openidParams, $openidConf) {
+  if (null !== $autoLogin = $request->query->get('autologin')) {
+  		$app['monolog']->addDebug('autologin');
+        return $app->redirect($openidConf->toArray()['authorization_endpoint'].'?response_type=code&client_id='.$openidConf->toArray()['client_id'].'&redirect_uri='.$openidConf->toArray()['client_redirect_url'].'&state=hp');
+  }
+
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig', [
   		'openidParams' => $openidParams,
