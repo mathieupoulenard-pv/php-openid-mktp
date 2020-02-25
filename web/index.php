@@ -55,12 +55,33 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   }
 */
 
-  
-  dump($request);
-  dump($request->query->get('code'));
+
+  if (null === $code = $request->query->get('code')) {
+  		$app['monolog']->addDebug('no code');
+        return $app->redirect('/');
+  }
+
+  $tokenRespoense = $client->request('POST', $openidConf->toArray()['token_endpoint'], [
+
+    
+    'body' => [
+    	'grant_type' => 'authorization_code',
+    	'code' => $code,
+    	'client_id' => $openidParams['client_id'],
+    	'client_secret' => $openidParams['client_secret'],
+    	'redirect_uri' => $openidParams['client_redirect_url']
+    	],
+
+  ]);
+
+  dump($tokenRespoense->getContent())
+
   $username = 'toto';
   $app['session']->set('user', array('username' => $username));
 
+
+
+  dump($app['session']);
 
   return $app['twig']->render('callback.twig', [
   		'openidParams' => $openidParams,
