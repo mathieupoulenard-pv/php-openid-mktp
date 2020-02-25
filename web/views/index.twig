@@ -59,7 +59,7 @@
 {% endif %}
 
 
-{% set fullAccess = (app.session.get('user').custom_attributes.marketPlaceAccess is same as("scm-val")) %}
+
 {% if app.session.get('user') is not null %}
 <h2>Profil complet ?</h2>
 
@@ -67,6 +67,7 @@
 <button type="button" class="btn btn-primary"><a href="#">Je complète mes infos</a></button>
 {% endif %}
 
+{% set fullAccess = (app.session.get('user').custom_attributes.marketPlaceAccess is same as("scm-val")) %}
 <button type="button" class="btn btn-success"{% if fullAccess %} disabled="disabled"{% endif %}><a href="#">Je commande</a></button>
 {% endif %}
 
