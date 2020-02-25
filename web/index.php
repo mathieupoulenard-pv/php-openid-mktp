@@ -63,16 +63,13 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 
   $client = HttpClient::create();
   $tokenRespoense = $client->request('POST', $openidConf->toArray()['token_endpoint'], [
-
-    
     'body' => [
     	'grant_type' => 'authorization_code',
     	'code' => $code,
     	'client_id' => $openidParams['client_id'],
     	'client_secret' => $openidParams['client_secret'],
     	'redirect_uri' => $openidParams['client_redirect_url']
-    	],
-
+    ],
   ]);
 
   dump($tokenRespoense->getContent());
