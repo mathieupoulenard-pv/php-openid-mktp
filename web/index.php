@@ -100,7 +100,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 });
 
 $app->get('/prepare', function(Request $request) use($app, $openidParams, $openidConf) {
-  if ((null !== $autoLogin = $request->query->get('autologin')) && (null !== $user = $app['session']->get('user'))) {
+  if ((null !== $autoLogin = $request->query->get('autologin')) && (null === $user = $app['session']->get('user'))) {
   		$app['monolog']->addDebug('autologin');
   		$app['session']->set('prepareShow', $request->query->get('show'));
         return $app->redirect($openidConf->toArray()['authorization_endpoint'].'?response_type=code&client_id='.$openidParams['client_id'].'&redirect_uri='.$openidParams['client_redirect_url'].'&state=hp');
