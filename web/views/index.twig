@@ -59,9 +59,15 @@
 {% endif %}
 
 
+{% set fullAccess = (app.session.get('user').custom_attributes.marketPlaceAccess eq "scm-val") %}
 {% if app.session.get('user') is not null %}
-<h2>Vous êtes autorisé à commander</h2>
-<button type="button" class="btn btn-success"><a href="#">Je commande</a></button>
+<h2>Profil complet ?</h2>
+
+{% if app.session.get('user').custom_attributes.tvaIntra is null %}
+<button type="button" class="btn btn-primary"><a href="#">Je complète mes infos</a></button>
+{% endif %}
+
+<button type="button" class="btn btn-success"{% if fullAccess %} disabled="disabled"{% endif %}><a href="#">Je commande</a></button>
 {% endif %}
 
 
