@@ -10,10 +10,10 @@
 {% else %}
 <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">
-        <a href="{{ openidConfArray.issuer }}"><span class="glyphicon glyphicon-book"></span> Vous êtes connecté : {{ app.session.get('user').name }} </a>
+        <a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a>
       </li>
       <li class="navbar-right">
-        <a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a>
+        <a href="{{ openidConfArray.issuer }}"><span class="glyphicon glyphicon-book"></span> Vous êtes connecté : {{ app.session.get('user').name }} </a>
       </li>
 </ul>
 {% endif %}
@@ -105,8 +105,6 @@
     </div>
   </div>
 </div>
-
-
 
 {% if app.session.get('user') is not null %}
 <!-- Button trigger modal -->
