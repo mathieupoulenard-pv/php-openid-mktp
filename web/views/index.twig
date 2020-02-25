@@ -8,7 +8,11 @@
       </li>
 </ul>
 {% else %}
-Vous êtes connecté : 
+<ul class="nav navbar-nav navbar-right">
+      <li class="navbar-right">
+        <a href="{{ openidConfArray.issuer }}"><span class="glyphicon glyphicon-book"></span> Vous êtes connecté : {{ app.session.get('user').name }} </a>
+      </li>
+</ul>
 {% endif %}
 {% endblock %}
 
@@ -16,6 +20,8 @@ Vous êtes connecté :
 <h1>Bienvenue sur la marketplace !</h1>
 
 <br/>
+
+
 
 {{ dump(app.session.get('user')) }}
 {{ dump(app.session.get('user') is null) }}
