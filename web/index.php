@@ -26,7 +26,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
-$app->register(new SessionServiceProvider, array(
+$app->register(new Silex\Provider\SessionServiceProvider, array(
     'session.storage.save_path' => dirname(__DIR__) . '/tmp/sessions'
 ));
 
