@@ -62,7 +62,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   }
 
   $client = HttpClient::create();
-  $tokenRespoense = $client->request('POST', $openidConf->toArray()['token_endpoint'], [
+  $tokenResponse = $client->request('POST', $openidConf->toArray()['token_endpoint'], [
     'body' => [
     	'grant_type' => 'authorization_code',
     	'code' => $code,
@@ -72,12 +72,29 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
     ],
   ]);
 
-  dump($tokenRespoense->getContent());
+  dump($tokenResponse->toArray());
 
-  $username = 'toto';
-  $app['session']->set('user', array('username' => $username));
+  if (null === $accessToken = $tokenResponse->toArray()['access_token']) {
+  		$app['monolog']->addDebug('no access token');
+        return $app->redirect('/');
+  }
 
 
+  $userInfoResponse = $client->request('POST', $openidConf->toArray()['userinfo_endpoint'], [
+    'headers' => [
+    	'Authorization' => $tokenResponse->toArray()['token_type'] . ' ' . $tokenResponse->toArray()['access_token']
+    ],
+  ]);
+
+   dump($userInfoResponse);
+
+  if (null === $userInfo = $userInfoResponse->toArray()) {
+  		$app['monolog']->addDebug('no access token');
+        return $app->redirect('/');
+  }
+
+
+  $app['session']->set('user', $userInfo);
 
   dump($app['session']);
 
