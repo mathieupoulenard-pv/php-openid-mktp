@@ -11,7 +11,7 @@ $openidParams = [
 	'login_url' => getenv('SF_LOGIN_URL'),
 	'client_id' => getenv('CLIENT_ID'),
 	'client_secret' => getenv('CLIENT_SECRET'),
-	'redirect_url' => getenv('REDIRECT_URL')
+	'client_redirect_url' => getenv('REDIRECT_URL')
 ];
 
 // Register the monolog logging service
