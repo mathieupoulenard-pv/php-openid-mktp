@@ -10,10 +10,6 @@
 {% else %}
 Vous êtes connecté : {{ app.session.user.name }}
 {% endif %}
-
-{{ dump(app.session) }}
-{{ dump(app.session.user is defined) }}
-
 {% endblock %}
 
 {% block content %}
@@ -21,6 +17,7 @@ Vous êtes connecté : {{ app.session.user.name }}
 
 <br/>
 
+{{ dump(app.session) }}
 <button type="button" class="btn btn-success"><a href="#">Je commande</a></button>
 
 
