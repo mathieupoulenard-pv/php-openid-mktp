@@ -74,7 +74,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 
   ]);
 
-  dump($tokenRespoense->getContent())
+  dump($tokenRespoense->getContent());
 
   $username = 'toto';
   $app['session']->set('user', array('username' => $username));
