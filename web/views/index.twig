@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block connexion %}
-{% if app.session.user is not defined %}
+{% if app.session.get('user') is not defined %}
 <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">
         <a href="{{ openidConfArray.authorization_endpoint }}?response_type=code&client_id={{ openidParams.client_id }}&redirect_uri={{ openidParams.client_redirect_url }}&state=hp"><span class="glyphicon glyphicon-book"></span> Connexion</a>
       </li>
 </ul>
 {% else %}
-Vous êtes connecté : {{ app.session.user.name }}
+Vous êtes connecté : {{ app.session.get('user').name }}
 {% endif %}
 {% endblock %}
 
@@ -17,7 +17,8 @@ Vous êtes connecté : {{ app.session.user.name }}
 
 <br/>
 
-{{ dump(app.session) }}
+{{ dump(app.session.get('user')) }}
+{{ dump(app.session.get('user')) is defined }}
 <button type="button" class="btn btn-success"><a href="#">Je commande</a></button>
 
 
