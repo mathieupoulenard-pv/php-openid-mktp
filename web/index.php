@@ -5,6 +5,7 @@ require('../vendor/autoload.php');
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -26,13 +27,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
-$app->register(new Silex\Provider\SessionServiceProvider, array(
-    'session.storage.save_path' => dirname(__DIR__) . '/tmp/sessions'
-));
+$session = new Session();
+$session->start();
 
-$app->before(function ($request) {
-    $request->getSession()->start();
-});
 
 $client = HttpClient::create();
 $openidConf = $client->request('GET', $openidParams['login_url'].'/.well-known/openid-configuration');
