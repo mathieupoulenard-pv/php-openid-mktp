@@ -99,6 +99,13 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 
 });
 
+$app->get('/logout', function(Request $request) use($app, $openidParams, $openidConf) {
+
+  $app['monolog']->addDebug('logout');
+  $app['session']->destroy();
+  return $app->redirect($openidConf->toArray()['end_session_endpoint']);
+});
+
 $app->get('/prepare', function(Request $request) use($app, $openidParams, $openidConf) {
   if ((null !== $autoLogin = $request->query->get('autologin')) && (null === $user = $app['session']->get('user'))) {
   		$app['monolog']->addDebug('autologin');
