@@ -48,13 +48,6 @@ $app->get('/', function() use($app, $openidParams, $openidConf) {
 $app->get('/callback', function(Request $request) use($app, $openidParams, $openidConf) {
   
   $app['monolog']->addDebug('callback output.');
- /*
-  if (null === $user = $app['session']->get('user')) {
-  		$app['monolog']->addDebug('no session');
-        return $app->redirect('/');
-  }
-*/
-
 
   if (null === $code = $request->query->get('code')) {
   		$app['monolog']->addDebug('no code');
@@ -72,13 +65,10 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
     ],
   ]);
 
-  dump($tokenResponse->toArray());
-
   if (null === $accessToken = $tokenResponse->toArray()['access_token']) {
   		$app['monolog']->addDebug('no access token');
         return $app->redirect('/');
   }
-
 
   $userInfoResponse = $client->request('POST', $openidConf->toArray()['userinfo_endpoint'], [
     'headers' => [
@@ -86,23 +76,16 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
     ],
   ]);
 
-   dump($userInfoResponse);
-
   if (null === $userInfo = $userInfoResponse->toArray()) {
   		$app['monolog']->addDebug('no access token');
         return $app->redirect('/');
   }
 
-
   $app['session']->set('user', $userInfo);
 
-  dump($app['session']);
+  $app['monolog']->addDebug('user connected');
+  return $app->redirect('/');
 
-  return $app['twig']->render('callback.twig', [
-  		'openidParams' => $openidParams,
-  		'openidConf' => $openidConf->getContent(),
-  		'openidConfArray' => $openidConf->toArray()
-  ]);
 });
 
 $app->run();
