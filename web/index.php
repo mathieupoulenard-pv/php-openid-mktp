@@ -38,4 +38,14 @@ $app->get('/', function() use($app, $openidParams, $openidConf) {
   ]);
 });
 
+
+$app->get('/callback', function() use($app, $openidParams, $openidConf) {
+  $app['monolog']->addDebug('logging output.');
+  return $app['twig']->render('callback.twig', [
+  		'openidParams' => $openidParams,
+  		'openidConf' => $openidConf->getContent(),
+  		'openidConfArray' => $openidConf->toArray()
+  ]);
+});
+
 $app->run();
