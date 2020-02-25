@@ -3,6 +3,8 @@
 require('../vendor/autoload.php');
 
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 $app = new Silex\Application();
 $app['debug'] = true;
