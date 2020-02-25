@@ -39,8 +39,20 @@ $app->get('/', function() use($app, $openidParams, $openidConf) {
 });
 
 
-$app->get('/callback', function() use($app, $openidParams, $openidConf) {
-  $app['monolog']->addDebug('logging output.');
+$app->get('/callback', function(Request $request) use($app, $openidParams, $openidConf) {
+  
+  $app['monolog']->addDebug('callback output.');
+  if (null === $user = $app['session']->get('user')) {
+  		$app['monolog']->addDebug('no session');
+        return $app->redirect('/');
+  }
+
+  dump($request);
+  dump($request->query->get('code'));
+  $username = 'toto';
+  $app['session']->set('user', array('username' => $username));
+
+
   return $app['twig']->render('callback.twig', [
   		'openidParams' => $openidParams,
   		'openidConf' => $openidConf->getContent(),
