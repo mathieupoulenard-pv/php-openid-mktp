@@ -99,7 +99,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 
 
   if($userInfo["custom_attributes"]["marketPlaceAccess"] === "stm-ref") {
-  	return new Response('Access denied to marketplace', 403);
+  	
 
   }
 
