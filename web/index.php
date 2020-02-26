@@ -38,7 +38,7 @@ $openidConf = $client->request('GET', $openidParams['login_url'].'/.well-known/o
 $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) {
   if (null !== $autoLogin = $request->query->get('autologin')) {
   		$app['monolog']->addDebug('autologin');
-        return $app->redirect($openidConf->toArray()['authorization_endpoint'].'?response_type=code&scope=profile+openid+api&client_id='.$openidParams['client_id'].'&redirect_uri='.$openidParams['client_redirect_url'].'&state=hp');
+        return $app->redirect($openidConf->toArray()['authorization_endpoint'].'?response_type=code&scope=profile+openid+api+full&client_id='.$openidParams['client_id'].'&redirect_uri='.$openidParams['client_redirect_url'].'&state=hp');
   }
 
   $app['monolog']->addDebug('logging output.');
