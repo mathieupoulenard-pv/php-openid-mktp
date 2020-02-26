@@ -86,7 +86,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
         return $app->redirect('/');
   }
 
-  $app['session']->set('token', $tokenResponse;
+  $app['session']->set('token', $tokenResponse);
   $app['session']->set('accessToken', $tokenResponse->toArray()['access_token']);
   $app['session']->set('user', $userInfo);
 
