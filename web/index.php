@@ -175,7 +175,7 @@ Optin_Tel_Date_Modification__c
 Optin_Tel__c
 */
   dump($patchConsentementResponse->getContent(false));
-die;
+//die;
   return $app->redirect('/');
 
 });
