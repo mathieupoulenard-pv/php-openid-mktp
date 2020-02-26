@@ -124,7 +124,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
         'Authorization' => "Bearer " . $accessToken,
         'Content-Type' => 'application/json'
       ],
-      'json' => ['Code' => 'MKP', 'ContactId' => $userResponse->toArray()["ContactId"]]
+      'json' => ['CampaignId' => '7013N0000005uHHQAY', 'ContactId' => $userResponse->toArray()["ContactId"]]
     ]);
 
   dump($patchCampaignMemberResponse->getContent(false));
