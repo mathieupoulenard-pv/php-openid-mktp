@@ -81,13 +81,12 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
     ],
   ]);
 
-  $app['session']->set('accessToken', $tokenResponse->toArray()['access_token']);
-
   if (null === $userInfo = $userInfoResponse->toArray()) {
   		$app['monolog']->addDebug('no access token');
         return $app->redirect('/');
   }
 
+  $app['session']->set('accessToken', $tokenResponse->toArray()['access_token']);
   $app['session']->set('user', $userInfo);
 
   $app['monolog']->addDebug('user connected');
