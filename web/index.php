@@ -104,6 +104,70 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   	return new Response('Access denied to marketplace', 403);
   }
 
+  //first access create membre de campagne programme et consentements
+  $client = HttpClient::create();
+  $userInfo = $app['session']->get('user');
+  $accessToken = $app['session']->get('accessToken');
+
+  // Get User content
+  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."user/" . $userInfo["user_id"], [
+    'headers' => [
+      'Authorization' => "Bearer " . $accessToken
+    ]
+  ]);
+
+  dump($userResponse->toArray());
+
+  // Create campaign member
+  $patchCampaignMemberResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."CampaignMember/", [
+      'headers' => [
+        'Authorization' => "Bearer " . $accessToken,
+        'Content-Type' => 'application/json'
+      ],
+      'json' => ['Code' => 'MKP', 'ContactId' => $userResponse->toArray()["ContactId"]]
+    ]);
+
+  dump($patchCampaignMemberResponse->getContent(false));
+
+  // Create campaign member
+  $patchConsentementResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
+      'headers' => [
+        'Authorization' => "Bearer " . $accessToken,
+        'Content-Type' => 'application/json'
+      ],
+      'json' => [
+      	'Code_campagne__c' => 'MKP', 
+      	'Contact__c' => $userResponse->toArray()["ContactId"],
+      	'Optin_Email__c' => true,
+      	'Optin_Email_Date_Creation__c' => $userResponse->toArray()["ContactId"],
+      	'Optin_Email_Date_Modification__c' => $userResponse->toArray()["ContactId"],
+      ]
+    ]);
+
+/*
+Contact__c
+BU__c
+Campagne__c
+Code_campagne__c
+Date_et_heure_de_modification_custom__c
+Optin_Courrier_Date_Creation__c
+Optin_Courrier_Date_Modification__c
+Optin_Courrier__c
+Optin_Email_Date_Creation__c
+Optin_Email_Date_Modification__c
+Optin_Email__c
+Optin_Partenaire_Date_Creation__c
+Optin_Partenaire_Date_Modification__c
+Optin_Partenaire__c
+Optin_SMS_Date_Creation__c
+Optin_SMS_Date_Modification__c
+Optin_SMS__c
+Optin_Tel_Date_Creation__c
+Optin_Tel_Date_Modification__c
+Optin_Tel__c
+*/
+  dump($patchConsentementResponse->getContent(false));
+
   return $app->redirect('/');
 
 });
