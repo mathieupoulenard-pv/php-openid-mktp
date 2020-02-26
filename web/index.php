@@ -97,11 +97,12 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
         return $app->redirect('/prepare?show='.$app['session']->get('prepareShow'));
   }
 
+/*
   if($userInfo["custom_attributes"]["marketPlaceAccess"] === "stm-ref") {
   	return new Response('Access denied to marketplace', 403);
 
   }
-	
+*/
   return $app->redirect('/');
 
 });
