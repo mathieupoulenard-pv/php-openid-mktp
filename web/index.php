@@ -133,4 +133,62 @@ $app->get('/prepare', function(Request $request) use($app, $openidParams, $openi
 });
 
 
+$app->get('/order', function(Request $request) use($app, $openidParams, $openidConf) {
+  if (null === $user = $app['session']->get('user')) {
+      $app['monolog']->addDebug('no user');
+        return $app->redirect('/');
+  }
+
+
+
+  $client = HttpClient::create();
+  $userInfo = $app['session']->get('user');
+  $accessToken = $app['session']->get('accessToken');
+
+  // Get User content
+  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."user/" . $userInfo["user_id"], [
+    'headers' => [
+      'Authorization' => "Bearer " . $accessToken
+    ]
+  ]);
+
+  //dump($userResponse->toArray());
+
+  // Get Contact content
+  $contactResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/" . $userResponse->toArray()["ContactId"], [
+    'headers' => [
+      'Authorization' => "Bearer " . $accessToken
+    ]
+  ]);
+
+  //dump($contactResponse->toArray());
+
+  // Get Compte content
+  $accountResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."account/".$userResponse->toArray()["AccountId"], [
+    'headers' => [
+      'Authorization' => "Bearer " . $accessToken
+    ]
+  ]);
+
+  //($accountResponse->toArray());
+
+  // Post address de facturation
+  $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userResponse->toArray()["ContactId"], [
+      'headers' => [
+        'Authorization' => "Bearer " . $accessToken,
+        'Content-Type' => 'application/json'
+      ],
+      'json' => ['OtherStreet' => 'Ma rue Marketplace', 'OtherCity' => 'Lyon 7è', 'OtherPostalCode' => '69007']
+    ]);
+
+  dump($patchResponse->getContent(false));
+
+  $app['monolog']->addDebug('logging output.');
+  return $app['twig']->render('order.twig', [
+      'openidParams' => $openidParams,
+      'openidConf' => $openidConf->getContent(),
+      'openidConfArray' => $openidConf->toArray()
+  ]);
+});
+
 $app->run();
