@@ -147,8 +147,8 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
       	'Code_campagne__c' => 'MKP', 
       	'Contact__c' => $userResponse->toArray()["ContactId"],
       	'Optin_Email__c' => true,
-      	'Optin_Email_Date_Creation__c' => $userResponse->toArray()["ContactId"],
-      	'Optin_Email_Date_Modification__c' => $userResponse->toArray()["ContactId"],
+      	'Optin_Email_Date_Creation__c' => "2020-02-26T18:00:00.000+0000",
+      	'Optin_Email_Date_Modification__c' => "2020-02-26T18:00:00.000+0000"
       ]
     ]);
 
