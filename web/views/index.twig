@@ -68,7 +68,7 @@
 {% endif %}
 
 {% set fullAccess = (app.session.get('user').custom_attributes.marketPlaceAccess is same as("stm-val")) %}
-<button type="button" class="btn btn-success"{% if not fullAccess %} disabled="disabled"{% endif %}><a href="#">Je commande des produits</a></button>
+<button type="button" class="btn {% if fullAccess %}btn-success{% else %}btn-danger{% endif %}"{% if not fullAccess %} disabled="disabled"{% endif %}><a href="/order">Je commande des produits</a></button>
 {% endif %}
 
 
