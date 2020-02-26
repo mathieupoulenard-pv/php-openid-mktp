@@ -81,7 +81,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
     ],
   ]);
 
-  echo $tokenResponse->toArray()['access_token'];
+  $app['session']->set('accessToken', $tokenResponse->toArray()['access_token']);
 
   if (null === $userInfo = $userInfoResponse->toArray()) {
   		$app['monolog']->addDebug('no access token');
