@@ -244,7 +244,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
     ]
   ]);
 
-  //($accountResponse->toArray());
+  //dump($accountResponse->toArray());
 
   // Post address de facturation
   $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userResponse->toArray()["ContactId"], [
