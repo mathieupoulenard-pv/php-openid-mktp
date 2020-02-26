@@ -67,7 +67,7 @@
 <button type="button" class="btn btn-light"><a href="#">Je complète mes infos</a></button>
 {% endif %}
 
-{% set fullAccess = (app.session.get('user').custom_attributes.marketPlaceAccess is same as("scm-val")) %}
+{% set fullAccess = (app.session.get('user').custom_attributes.marketPlaceAccess is same as("stm-val")) %}
 <button type="button" class="btn btn-success"{% if not fullAccess %} disabled="disabled"{% endif %}><a href="#">Je commande des produits</a></button>
 {% endif %}
 
