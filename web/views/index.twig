@@ -130,7 +130,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Token response : {{ app.session.get('token') }} <br/>
+        Token response : {{ dump(app.session.get('token')) }} <br/>
         <br/>
         Access token user for API : {{ app.session.get('accessToken') }} <br/>
         <br/>
