@@ -119,7 +119,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   dump($userResponse->toArray());
 
   // Create campaign member
-  $patchCampaignMemberResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."CampaignMember/", [
+  $patchCampaignMemberResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."CampaignMember/", [
       'headers' => [
         'Authorization' => "Bearer " . $accessToken,
         'Content-Type' => 'application/json'
@@ -130,7 +130,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   dump($patchCampaignMemberResponse->getContent(false));
 
   // Create campaign member
-  $patchConsentementResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
+  $patchConsentementResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
       'headers' => [
         'Authorization' => "Bearer " . $accessToken,
         'Content-Type' => 'application/json'
