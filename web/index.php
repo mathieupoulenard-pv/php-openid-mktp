@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+const API_VERSION = "48.0";
+
 $app = new Silex\Application();
 $app['debug'] = true;
 
