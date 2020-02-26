@@ -100,7 +100,6 @@
         Authorization Endpoint : {{ dump(openidConfArray.authorization_endpoint) }} <br/>
         Token Endpoint : {{ dump(openidConfArray.token_endpoint) }} <br/>
         User Info Endpoint : {{ dump(openidConfArray.userinfo_endpoint) }} <br/>
-        Access token user for API : {{ app.session.get('accessToken') }} <br/>
         <br/>
         <br/>
         Configuration : <br/>
@@ -131,6 +130,8 @@
         </button>
       </div>
       <div class="modal-body">
+        Access token user for API : {{ app.session.get('accessToken') }} <br/>
+        <br/>
         {{ dump(app.session.get('user')) }}
       </div>
       <div class="modal-footer">
