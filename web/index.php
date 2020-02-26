@@ -129,6 +129,14 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 
   dump($patchCampaignMemberResponse->getContent(false));
 
+  // Get Consent content examplz
+  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/a0T3N0000001ERxUAM", [
+    'headers' => [
+      'Authorization' => "Bearer " . $accessToken
+    ]
+  ]);
+  dump($patchCampaignMemberResponse->getContent(false));
+
   // Create campaign member
   $patchConsentementResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
       'headers' => [
