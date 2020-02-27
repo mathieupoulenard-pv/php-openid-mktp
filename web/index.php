@@ -239,7 +239,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
   //dump($userResponse->toArray());
 
   // Get Contact content
-  $contactResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/" . $userInfo["ContactId"], [
+  $contactResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/" . $userInfo["custom_attributes"]["ContactId"], [
     'headers' => [
       'Authorization' => "Bearer " . $accessToken
     ]
@@ -248,7 +248,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
   //dump($contactResponse->toArray());
 
   // Get Compte content
-  $accountResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."account/".$userInfo["AccountId"], [
+  $accountResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."account/".$userInfo["custom_attributes"]["AccountId"], [
     'headers' => [
       'Authorization' => "Bearer " . $accessToken
     ]
@@ -257,7 +257,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
   //dump($accountResponse->toArray());
 
   // Post address de facturation
-  $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userInfo["ContactId"], [
+  $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userInfo["custom_attributes"]["ContactId"], [
       'headers' => [
         'Authorization' => "Bearer " . $accessToken,
         'Content-Type' => 'application/json'
