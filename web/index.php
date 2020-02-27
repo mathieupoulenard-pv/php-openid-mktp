@@ -46,11 +46,11 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
   $app['monolog']->addDebug('logging output.');
 
 
-// get campagn type
+  // get campagn type
   $userInfo = $app['session']->get('user');
   if(null !== $userInfo) {
-  	dump($userInfo["custom_attributes"]["campaignMembers"]);
-  	dump(json_decode($userInfo["custom_attributes"]["campaignMembers"]));
+  	//dump($userInfo["custom_attributes"]["campaignMembers"]);
+  	//dump(json_decode($userInfo["custom_attributes"]["campaignMembers"]));
   }
 
 
