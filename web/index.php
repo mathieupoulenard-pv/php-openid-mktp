@@ -48,8 +48,10 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
 
 // get campagn type
   $userInfo = $app['session']->get('user');
-  dump($userInfo["custom_attributes"]["campaignMembers"]));
-  dump(json_decode($userInfo["custom_attributes"]["campaignMembers"]));
+  if(null !== $userInfo) {
+  	dump($userInfo["custom_attributes"]["campaignMembers"]));
+  	dump(json_decode($userInfo["custom_attributes"]["campaignMembers"]));
+  }
 
 
   return $app['twig']->render('index.twig', [
