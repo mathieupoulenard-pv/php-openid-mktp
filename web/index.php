@@ -265,7 +265,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
       'json' => ['MailingStreet' => 'Ma rue Marketplace', 'MailingCity' => 'Lyon 7è', 'MailingPostalCode' => '69007', 'MailingCountry'  => 'France']
     ]);
 
-  dump($patchResponse->getContent(false));
+//  dump($patchResponse->getContent(false));
 
 
   $app['monolog']->addDebug('logging output.');
