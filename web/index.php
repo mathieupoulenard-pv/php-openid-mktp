@@ -44,6 +44,14 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
   }
 
   $app['monolog']->addDebug('logging output.');
+
+
+// get campagn type
+  $userInfo = $app['session']->get('user');
+  dump($userInfo["custom_attributes"]["campaignMembers"]));
+  dump(json_decode($userInfo["custom_attributes"]["campaignMembers"]));
+
+
   return $app['twig']->render('index.twig', [
   		'openidParams' => $openidParams,
   		'openidConf' => $openidConf->getContent(),
