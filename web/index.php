@@ -262,7 +262,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
         'Authorization' => "Bearer " . $accessToken,
         'Content-Type' => 'application/json'
       ],
-      'json' => ['MailingStreet' => 'Ma rue Marketplace', 'MailingCity' => 'Lyon 7è', 'MailingPostalCode' => '69007']
+      'json' => ['MailingStreet' => 'Ma rue Marketplace', 'MailingCity' => 'Lyon 7è', 'MailingPostalCode' => '69007', 'MailingCountry'  => 'France']
     ]);
 
   dump($patchResponse->getContent(false));
