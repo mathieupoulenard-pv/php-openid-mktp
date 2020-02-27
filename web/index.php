@@ -266,6 +266,8 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
     ]);
 
   dump($patchResponse->getContent(false));
+  dump($client->getRequest());
+  dump($patchResponse);
 
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('order.twig', [
