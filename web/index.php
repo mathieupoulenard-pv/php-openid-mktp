@@ -266,9 +266,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
     ]);
 
   dump($patchResponse->getContent(false));
-  dump(preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userInfo["custom_attributes"]["ContactId"]);
-  dump($client);
-  dump($patchResponse);
+
 
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('order.twig', [
