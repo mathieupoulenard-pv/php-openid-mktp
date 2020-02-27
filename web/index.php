@@ -155,7 +155,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
       ],
       'json' => [
       	'Code_campagne__c' => 'MKP', 
-      	'Contact__c' => $userResponse->toArray()["ContactId"],
+      	'Contact__c' => $userInfo["ContactId"],
       	'Optin_Email__c' => true,
       	'Optin_Email_Date_Creation__c' => "2020-02-26T18:00:00.000+0000",
       	'Optin_Email_Date_Modification__c' => "2020-02-26T18:00:00.000+0000"
@@ -239,7 +239,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
   //dump($userResponse->toArray());
 
   // Get Contact content
-  $contactResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/" . $userResponse->toArray()["ContactId"], [
+  $contactResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/" . $userInfo["ContactId"], [
     'headers' => [
       'Authorization' => "Bearer " . $accessToken
     ]
@@ -248,7 +248,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
   //dump($contactResponse->toArray());
 
   // Get Compte content
-  $accountResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."account/".$userResponse->toArray()["AccountId"], [
+  $accountResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."account/".$userInfo["AccountId"], [
     'headers' => [
       'Authorization' => "Bearer " . $accessToken
     ]
@@ -257,7 +257,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
   //dump($accountResponse->toArray());
 
   // Post address de facturation
-  $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userResponse->toArray()["ContactId"], [
+  $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userInfo["ContactId"], [
       'headers' => [
         'Authorization' => "Bearer " . $accessToken,
         'Content-Type' => 'application/json'
