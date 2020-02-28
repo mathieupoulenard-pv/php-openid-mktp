@@ -136,7 +136,12 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    {
 	    	"Code__c"  : "MKP"
 	    },
-	    "ContactId" : "0033N0000083v3sQAA"
+	    "ContactId" : "0033N0000083v3sQAA",
+	    "utm_campaign__c" : "ga_campaign_prg",
+		"utm_content__c" : "ga_content_prg",
+    	"utm_medium__c" : "ga_medium_prg",
+    	"utm_source__c" : "ga_source_prg",
+    	"utm_term__c" : "ga_term_prg"
 	}
 	*/
 	  $patchCampaignMemberResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."CampaignMember/", [
@@ -144,7 +149,14 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	        'Authorization' => "Bearer " . $accessToken,
 	        'Content-Type' => 'application/json'
 	      ],
-	      'json' => ['Campaign' => ["Code__c" => "MKP"], 'ContactId' => $userInfo["custom_attributes"]["ContactId"]]
+	      'json' => [
+	      	'Campaign' => ["Code__c" => "MKP"], 
+	      	'ContactId' => $userInfo["custom_attributes"]["ContactId"],
+			'utm_content__c' => 'ga_content_prg',
+			'utm_medium__c' => 'ga_medium_prg',
+			'utm_source__c' => 'ga_source_prg',
+			'utm_term__c' => 'ga_term_prg'
+	      	]
 	    ]);
 
 	  //dump($patchCampaignMemberResponse->getContent(false));
