@@ -53,7 +53,6 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
   	//dump(json_decode($userInfo["custom_attributes"]["campaignMembers"]));
   }
 
-
   return $app['twig']->render('index.twig', [
   		'openidParams' => $openidParams,
   		'openidConf' => $openidConf->getContent(),
@@ -115,7 +114,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   }
 
   //first access create membre de campagne programme et consentements
-  if(0 == count(array_filter(json_decode($campaigns, true), function($campaign) {return $campaign['Code__c'] == "MKP";}))) {
+  if(0 == count(array_filter(json_decode($userInfo["custom_attributes"]["campaignMembers"] , true), function($campaign) {return $campaign['Code__c'] == "MKP";}))) {
 
 	$client = HttpClient::create();
 	  $userInfo = $app['session']->get('user');
@@ -129,12 +128,6 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	  ]);
 
 	  dump($userResponse->toArray());
-	  // Get campaign code for marketplace
-	  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."user/" . $userInfo["user_id"], [
-	    'headers' => [
-	      'Authorization' => "Bearer " . $accessToken
-	    ]
-	  ]);
 
 	  // Create campaign member
 	 /*
@@ -151,13 +144,13 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	        'Authorization' => "Bearer " . $accessToken,
 	        'Content-Type' => 'application/json'
 	      ],
-	      'json' => ['Campaign' => ["Code__c" => "MKP"], 'ContactId' => $userResponse->toArray()["ContactId"]]
+	      'json' => ['Campaign' => ["Code__c" => "MKP"], 'ContactId' => $userInfo["custom_attributes"]["ContactId"]]
 	    ]);
 
 	  dump($patchCampaignMemberResponse->getContent(false));
 
 	  // Get All Consents for user content // Filter en MKP code
-	  $consentResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Contact/".$userInfo["ContactId"]."/Consentements__r", [
+	  $consentResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Contact/".$userInfo["custom_attributes"]["ContactId"]."/Consentements__r", [
 	    'headers' => [
 	      'Authorization' => "Bearer " . $accessToken
 	    ]
@@ -197,7 +190,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	      ],
 	      'json' => [
 	      	'Campagne__r' => ['Code__c' => 'MKP'], 
-	      	'Contact__c' => $userInfo["ContactId"],
+	      	'Contact__c' => $userInfo["custom_attributes"]["ContactId"],
 	      	'Optin_Email__c' => true,
 	      	'Optin_Email_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
 	      	'Optin_Email_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
