@@ -217,6 +217,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    ]);
 
 	  dump($patchConsentementResponse->getContent(false));
+	  die;
 
   }
 
