@@ -183,6 +183,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    "Optin_Partenaire_Date_Modification__c" : "2020-02-26T18:00:00.000+0000"
 	}
 	*/
+	  $datetime = new DateTime();
 	  $patchConsentementResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
 	      'headers' => [
 	        'Authorization' => "Bearer " . $accessToken,
@@ -192,20 +193,20 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	      	'Campagne__r' => ['Code__c' => 'MKP'], 
 	      	'Contact__c' => $userInfo["custom_attributes"]["ContactId"],
 	      	'Optin_Email__c' => true,
-	      	'Optin_Email_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
-	      	'Optin_Email_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	      	'Optin_Email_Date_Creation__c' => $datetime->format(DateTime::ISO8601),
+	      	'Optin_Email_Date_Modification__c' => $datetime->format(DateTime::ISO8601),
 	    	'Optin_SMS__c' => true,
-	    	'Optin_SMS_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
-	    	'Optin_SMS_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_SMS_Date_Creation__c' => $datetime->format(DateTime::ISO8601),
+	    	'Optin_SMS_Date_Modification__c' => $datetime->format(DateTime::ISO8601),
 	    	'Optin_Tel__c' => true,
-	    	'Optin_Tel_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
-	    	'Optin_Tel_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Tel_Date_Creation__c' => $datetime->format(DateTime::ISO8601),
+	    	'Optin_Tel_Date_Modification__c' => $datetime->format(DateTime::ISO8601),
 	    	'Optin_Courrier__c' => true,
-	    	'Optin_Courrier_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
-	    	'Optin_Courrier_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Courrier_Date_Creation__c' => $datetime->format(DateTime::ISO8601),
+	    	'Optin_Courrier_Date_Modification__c' => $datetime->format(DateTime::ISO8601),
 	    	'Optin_Partenaire__c' => true,
-	    	'Optin_Partenaire_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
-	    	'Optin_Partenaire_Date_Modification__c' => '2020-02-26T18:00:00.000+0000'
+	    	'Optin_Partenaire_Date_Creation__c' => $datetime->format(DateTime::ISO8601),
+	    	'Optin_Partenaire_Date_Modification__c' => $datetime->format(DateTime::ISO8601)
 	      ]
 	    ]);
 
