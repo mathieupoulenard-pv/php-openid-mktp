@@ -127,7 +127,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    ]
 	  ]);
 
-	  dump($userResponse->toArray());
+	  //dump($userResponse->toArray());
 
 	  // Create campaign member
 	 /*
@@ -147,7 +147,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	      'json' => ['Campaign' => ["Code__c" => "MKP"], 'ContactId' => $userInfo["custom_attributes"]["ContactId"]]
 	    ]);
 
-	  dump($patchCampaignMemberResponse->getContent(false));
+	  //dump($patchCampaignMemberResponse->getContent(false));
 
 	  // Get All Consents for user content // Filter en MKP code
 	  $consentResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Contact/".$userInfo["custom_attributes"]["ContactId"]."/Consentements__r", [
@@ -156,7 +156,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    ]
 	  ]);
 
-	  dump($consentResponse->getContent(false));
+	  //dump($consentResponse->getContent(false));
 
 	  // Create consentement MKP
 	  /*
@@ -210,8 +210,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	      ]
 	    ]);
 
-	  dump($patchConsentementResponse->getContent(false));
-	  die;
+	  //dump($patchConsentementResponse->getContent(false));
 
   }
 
