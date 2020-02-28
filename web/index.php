@@ -115,77 +115,111 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   }
 
   //first access create membre de campagne programme et consentements
-  $client = HttpClient::create();
-  $userInfo = $app['session']->get('user');
-  $accessToken = $app['session']->get('accessToken');
+  if(count(array_filter(json_decode($campaigns, true), function($campaign) {return $campaign['Code__c'] == "MKP";}))) {
 
-  // Get User content
-  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."user/" . $userInfo["user_id"], [
-    'headers' => [
-      'Authorization' => "Bearer " . $accessToken
-    ]
-  ]);
+	$client = HttpClient::create();
+	  $userInfo = $app['session']->get('user');
+	  $accessToken = $app['session']->get('accessToken');
 
-  dump($userResponse->toArray());
+	  // Get User content
+	  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."user/" . $userInfo["user_id"], [
+	    'headers' => [
+	      'Authorization' => "Bearer " . $accessToken
+	    ]
+	  ]);
 
-  // Create campaign member
-  $patchCampaignMemberResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."CampaignMember/", [
-      'headers' => [
-        'Authorization' => "Bearer " . $accessToken,
-        'Content-Type' => 'application/json'
-      ],
-      'json' => ['CampaignId' => '7013N0000005uHHQAY', 'ContactId' => $userResponse->toArray()["ContactId"]]
-    ]);
+	  dump($userResponse->toArray());
+	  // Get campaign code for marketplace
+	  $userResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."user/" . $userInfo["user_id"], [
+	    'headers' => [
+	      'Authorization' => "Bearer " . $accessToken
+	    ]
+	  ]);
 
-  dump($patchCampaignMemberResponse->getContent(false));
+	  // Create campaign member
+	 /*
+	{
+	    "Campaign": 
+	    {
+	    	"Code__c"  : "MKP"
+	    },
+	    "ContactId" : "0033N0000083v3sQAA"
+	}
+	*/
+	  $patchCampaignMemberResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."CampaignMember/", [
+	      'headers' => [
+	        'Authorization' => "Bearer " . $accessToken,
+	        'Content-Type' => 'application/json'
+	      ],
+	      'json' => ['Campaign' => ["Code__c" => "MKP"], 'ContactId' => $userResponse->toArray()["ContactId"]]
+	    ]);
 
-  // Get Consent content examplz
-  $consentResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/a0T3N0000001ERxUAM", [
-    'headers' => [
-      'Authorization' => "Bearer " . $accessToken
-    ]
-  ]);
-  dump($consentResponse->getContent(false));
+	  dump($patchCampaignMemberResponse->getContent(false));
 
-  // Create campaign member
-  $patchConsentementResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
-      'headers' => [
-        'Authorization' => "Bearer " . $accessToken,
-        'Content-Type' => 'application/json'
-      ],
-      'json' => [
-      	'Code_campagne__c' => 'MKP', 
-      	'Contact__c' => $userInfo["ContactId"],
-      	'Optin_Email__c' => true,
-      	'Optin_Email_Date_Creation__c' => "2020-02-26T18:00:00.000+0000",
-      	'Optin_Email_Date_Modification__c' => "2020-02-26T18:00:00.000+0000"
-      ]
-    ]);
+	  // Get All Consents for user content // Filter en MKP code
+	  $consentResponse = $client->request('GET', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Contact/".$userInfo["ContactId"]."/Consentements__r", [
+	    'headers' => [
+	      'Authorization' => "Bearer " . $accessToken
+	    ]
+	  ]);
 
-/*
-Contact__c
-BU__c
-Campagne__c
-Code_campagne__c
-Date_et_heure_de_modification_custom__c
-Optin_Courrier_Date_Creation__c
-Optin_Courrier_Date_Modification__c
-Optin_Courrier__c
-Optin_Email_Date_Creation__c
-Optin_Email_Date_Modification__c
-Optin_Email__c
-Optin_Partenaire_Date_Creation__c
-Optin_Partenaire_Date_Modification__c
-Optin_Partenaire__c
-Optin_SMS_Date_Creation__c
-Optin_SMS_Date_Modification__c
-Optin_SMS__c
-Optin_Tel_Date_Creation__c
-Optin_Tel_Date_Modification__c
-Optin_Tel__c
-*/
-  dump($patchConsentementResponse->getContent(false));
-//die;
+	  dump($consentResponse->getContent(false));
+
+	  // Create consentement MKP
+	  /*
+	{
+		"Campagne__r":
+	    {
+	    	"Code__c"  : "MKP"
+	    },
+	    "Contact__c": "0033N0000083v3sQAA",
+	    "Optin_Email__c" : true,
+	    "Optin_Email_Date_Creation__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Email_Date_Modification__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_SMS__c" : true,
+	    "Optin_SMS_Date_Creation__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_SMS_Date_Modification__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Tel__c" : true,
+	    "Optin_Tel_Date_Creation__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Tel_Date_Modification__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Courrier__c" : true,
+	    "Optin_Courrier_Date_Creation__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Courrier_Date_Modification__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Partenaire__c" : true,
+	    "Optin_Partenaire_Date_Creation__c" : "2020-02-26T18:00:00.000+0000",
+	    "Optin_Partenaire_Date_Modification__c" : "2020-02-26T18:00:00.000+0000"
+	}
+	*/
+	  $patchConsentementResponse = $client->request('POST', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."Consentement__c/", [
+	      'headers' => [
+	        'Authorization' => "Bearer " . $accessToken,
+	        'Content-Type' => 'application/json'
+	      ],
+	      'json' => [
+	      	'Campagne__r' => ['Code__c' => 'MKP'], 
+	      	'Contact__c' => $userInfo["ContactId"],
+	      	'Optin_Email__c' => true,
+	      	'Optin_Email_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
+	      	'Optin_Email_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_SMS__c' => true,
+	    	'Optin_SMS_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_SMS_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Tel__c' => true,
+	    	'Optin_Tel_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Tel_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Courrier__c' => true,
+	    	'Optin_Courrier_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Courrier_Date_Modification__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Partenaire__c' => true,
+	    	'Optin_Partenaire_Date_Creation__c' => '2020-02-26T18:00:00.000+0000',
+	    	'Optin_Partenaire_Date_Modification__c' => '2020-02-26T18:00:00.000+0000'
+	      ]
+	    ]);
+
+	  dump($patchConsentementResponse->getContent(false));
+
+  }
+
   return $app->redirect('/');
 
 });
@@ -256,7 +290,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
 
   //dump($accountResponse->toArray());
 
-  // Post address de facturation
+  // Post address de livraison
   $patchResponse = $client->request('PATCH', preg_replace("/{version}/", API_VERSION, $userInfo["urls"]["sobjects"])."contact/".$userInfo["custom_attributes"]["ContactId"], [
       'headers' => [
         'Authorization' => "Bearer " . $accessToken,
@@ -265,7 +299,7 @@ $app->get('/order', function(Request $request) use($app, $openidParams, $openidC
       'json' => ['MailingStreet' => 'Ma rue Marketplace', 'MailingCity' => 'Lyon 7è', 'MailingPostalCode' => '69007', 'MailingCountry'  => 'France']
     ]);
 
-//  dump($patchResponse->getContent(false));
+  //dump($patchResponse->getContent(false));
 
 
   $app['monolog']->addDebug('logging output.');
