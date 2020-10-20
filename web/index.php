@@ -127,9 +127,9 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    ]
 	  ]);
 	  
-	  $app['session']->set('userResponse', $userResponse);
+	  //$app['session']->set('userResponse', $userResponse);
 
-	  //dump($userResponse->toArray());
+	  dump($userResponse->toArray());die;
 
 	  // Create campaign member
 	 /*
