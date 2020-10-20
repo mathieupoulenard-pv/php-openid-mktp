@@ -126,6 +126,8 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	      'Authorization' => "Bearer " . $accessToken
 	    ]
 	  ]);
+	  
+	  $app['session']->set('userResponse', $userResponse);
 
 	  //dump($userResponse->toArray());
 
