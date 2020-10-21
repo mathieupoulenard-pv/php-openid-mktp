@@ -114,7 +114,9 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
   }
 
   //first access create membre de campagne programme et consentements
-  if(0 == count(array_filter(json_decode($userInfo["custom_attributes"]["campaignMembers"] , true), function($campaign) {return $campaign['Code__c'] == "MKP";}))) {
+  //if(0 == count(array_filter(json_decode($userInfo["custom_attributes"]["campaignMembers"] , true), function($campaign) {return $campaign['Code__c'] == "MKP";}))) {
+  // TODO 
+  if(10 == count(array_filter(json_decode($userInfo["custom_attributes"]["campaignMembers"] , true), function($campaign) {return $campaign['Code__c'] == "MKP";}))) {
 
 	$client = HttpClient::create();
 	  $userInfo = $app['session']->get('user');
