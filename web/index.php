@@ -127,7 +127,7 @@ $app->get('/callback', function(Request $request) use($app, $openidParams, $open
 	    ]
 	  ]);
 	  
-	  $app['session']->set('ContactId', $userResponse['ContactId']);
+	  $app['session']->set('ContactId', $userResponse->toArray()['ContactId']);
 
 	  //dump($userResponse->toArray());die;
 
