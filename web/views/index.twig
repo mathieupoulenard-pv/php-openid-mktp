@@ -72,7 +72,7 @@
 <h2>Profil complet ?</h2>
 
 {% if app.session.get('user').custom_attributes is defined and app.session.get('user').custom_attributes.TVA is empty %}
-<button type="button" class="btn btn-light"><a href="{{ openidConfArray.issuer }}/s/flow/AccountInformation?language=en_US&retURL=https://mktp-sf.herokuapp.com?autologin">Je complète mes infos</a></button>
+<button type="button" class="btn btn-light"><a href="{{ openidConfArray.issuer }}/s/complete-account-information?retURL=https://mktp-sf.herokuapp.com?autologin">Je complète mes infos</a></button>
 {% endif %}
 {% if app.session.get('user').custom_attributes is defined %}
 {% set fullAccess = (app.session.get('user').custom_attributes.AppAccess is same as("stm-val")) %}
