@@ -64,6 +64,10 @@
 <h2>Flow de complétude des infos entreprise</h2>
 <button type="button" class="btn btn-light"><a href="{{ openidConfArray.issuer }}/s/complete-account-information?retURL=https://mktp-sf.herokuapp.com?autologin">Je complète mes infos</a></button>
 
+<h2>Je change d'adresse </h2>
+<button type="button" class="btn btn-light"><a href="{{ openidConfArray.issuer }}/s/change-contact-address?address=billing&retURL=https://mktp-sf.herokuapp.com?autologin">Update addresse de facturation par défaut</a></button>
+<button type="button" class="btn btn-light"><a href="{{ openidConfArray.issuer }}/s/change-contact-address?address=mailing&retURL=https://mktp-sf.herokuapp.com?autologin">Update addresse de livraison par défaut</a></button>
+
 
 <h2>Profil complet ?</h2>
 
