@@ -61,6 +61,10 @@
 
 
 {% if app.session.get('user') is not null %}
+<h2>Flow de complétude des infos entreprise</h2>
+<button type="button" class="btn btn-light"><a href="{{ openidConfArray.issuer }}/s/complete-account-information?retURL=https://mktp-sf.herokuapp.com?autologin">Je complète mes infos</a></button>
+
+
 <h2>Profil complet ?</h2>
 
 {% if app.session.get('user').custom_attributes is defined and app.session.get('user').custom_attributes.TVA_Intra__c is empty %}
