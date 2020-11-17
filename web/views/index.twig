@@ -6,18 +6,11 @@
 <script>
 $(document).ready(function(){
       console.log("checklogin");
-      $.ajax({url: "{{ openidConfArray.issuer }}/s/checklogin?language=en_US", crossDomain:true, success: function(result){
-      
+      $.ajax({url: "{{ openidConfArray.issuer }}/s/pv_checklogin", crossDomain:true, success: function(result){
             console.log("result");
             console.log(result);
       }});
-      
-      console.log("checklogin2");
-      $.ajax({url: "{{ openidConfArray.authorization_endpoint }}?response_type=code&client_id={{ openidParams.client_id }}&redirect_uri={{ openidParams.client_redirect_url }}", success: function(result){
-      
-            console.log("result");
-            console.log(result);
-      }});
+
 });
 </script>
 <ul class="nav navbar-nav navbar-right">
