@@ -8,7 +8,7 @@ $(document).ready(function(){
 
       console.log("checklogin2");
       $.ajax({
-                  url: "https://devmpo-glevents.cs128.force.com/PV/pv_checklogin", 
+                  url: "https://devmpo-glevents.cs128.force.com/PV/checklogin", 
                   crossDomain:true,
                   "headers": {
                           "accept": "application/html",
@@ -23,12 +23,6 @@ $(document).ready(function(){
 
 });
 </script>
-<iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="300"
-    height="200"
-    src="https://devmpo-glevents.cs128.force.com/PV/pv_checklogin">
-</iframe>
 <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">
         <a href="{{ openidConfArray.authorization_endpoint }}?response_type=code&client_id={{ openidParams.client_id }}&redirect_uri={{ openidParams.client_redirect_url }}&state=hp"><span class="glyphicon glyphicon-book"></span> Connexion</a>
