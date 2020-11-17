@@ -27,6 +27,11 @@ $(document).ready(function(){
                         console.log(result);
             }
       });
+      
+      $.get("https://www.google.fr", function(data, status){
+                        console.log(data);
+                        console.log(status);
+  });
 });
 </script>
 <ul class="nav navbar-nav navbar-right">
