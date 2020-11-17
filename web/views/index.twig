@@ -6,7 +6,7 @@
 <script>
 $(document).ready(function(){
       console.log("checklogin");
-      $.ajax({url: "{{ openidConfArray.issuer }}", success: function(result){
+      $.ajax({url: "{{ openidConfArray.issuer }}/s/", success: function(result){
             console.log("result");
             console.log(result);
       }});
