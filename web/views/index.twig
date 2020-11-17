@@ -6,7 +6,7 @@
 <script>
 $(document).ready(function(){
       console.log("checklogin");
-      $.ajax({url: "{{ openidConfArray.authorization_endpoint }}", crossDomain:true, success: function(result){
+      $.ajax({url: "{{ openidConfArray.issuer }}/s/checklogin?language=en_US", crossDomain:true, success: function(result){
       
             console.log("result");
             console.log(result);
