@@ -11,10 +11,18 @@ $(document).ready(function(){
             console.log(result);
       }});
       console.log("checklogin2");
-      $.ajax({url: "https://www.google.fr", crossDomain:true, success: function(result){
-            console.log("result");
-            console.log(result);
-      }});
+      $.ajax({
+                  url: "https://www.google.fr", 
+                  crossDomain:true,
+                  "headers": {
+                          "accept": "application/json",
+                          "Access-Control-Allow-Origin":"*"
+                      }
+                  success: function(result){
+                        console.log("result");
+                        console.log(result);
+            }
+      });
 });
 </script>
 <ul class="nav navbar-nav navbar-right">
