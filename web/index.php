@@ -45,7 +45,11 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
 
   $app['monolog']->addDebug('logging output.');
 
-
+  // checklogin and autologin
+  if (getenv('SF_LOGIN_URL') == 'true' && !$app['session']->get('checklogin') && true) {
+  	$app['session']->set('checklogin', true);
+	  return $app->redirect($openidConf->toArray()['issuer'].'/pv_checklogin?redirect_uri=https://mktp-sf.herokuapp.com/';
+  }
   // get campagn type
   $userInfo = $app['session']->get('user');
   if(null !== $userInfo) {
