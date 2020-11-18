@@ -45,14 +45,8 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
 
   $app['monolog']->addDebug('logging output.');
 
- dump(getenv('ALLOWED_REFERERS'));
- dump(explode(',', getenv('ALLOWED_REFERERS')));
- dump($request->headers->get('referer'));
-	
- dump(parse_url($request->headers->get('referer'), PHP_URL_HOST));
- dump(in_array(parse_url($request->headers->get('referer'), PHP_URL_HOST), explode(',', getenv('ALLOWED_REFERERS'))));
  // checklogin and autologin
-  if (getenv('CHECKLOGIN') == 'true' && null == $userInfo && !$app['session']->get('checklogin') && true) {
+  if (getenv('CHECKLOGIN') == 'true' && null == $userInfo && (!$app['session']->get('checklogin') || in_array(parse_url($request->headers->get('referer'), PHP_URL_HOST), explode(',', getenv('ALLOWED_REFERERS'))))) {
   	$app['session']->set('checklogin', true);
 	  return $app->redirect($openidConf->toArray()['issuer'].'/pv_checklogin?redirect_uri=https://mktp-sf.herokuapp.com/');
   }
