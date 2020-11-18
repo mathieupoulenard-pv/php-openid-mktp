@@ -46,7 +46,7 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
   $app['monolog']->addDebug('logging output.');
 
  dump(getenv('ALLOWED_REFERERS'));
- dump(explode(getenv('ALLOWED_REFERERS'), ','));
+ dump(explode(getenv('ALLOWED_REFERERS'), ',')));
  dump(in_array($request->headers->get('referer'), explode(getenv('ALLOWED_REFERERS'), ','));
  // checklogin and autologin
   if (getenv('CHECKLOGIN') == 'true' && null == $userInfo && !$app['session']->get('checklogin') && true) {
