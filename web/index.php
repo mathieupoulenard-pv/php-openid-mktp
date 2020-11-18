@@ -48,7 +48,9 @@ $app->get('/', function(Request $request) use($app, $openidParams, $openidConf) 
  dump(getenv('ALLOWED_REFERERS'));
  dump(explode(',', getenv('ALLOWED_REFERERS')));
  dump($request->headers->get('referer'));
- dump(in_array($request->headers->get('referer'), explode(getenv('ALLOWED_REFERERS'), ',')));
+	
+ dump(parse_url($request->headers->get('referer'), PHP_URL_HOST));
+ dump(in_array(parse_url($request->headers->get('referer'), PHP_URL_HOST), explode(',', getenv('ALLOWED_REFERERS'))));
  // checklogin and autologin
   if (getenv('CHECKLOGIN') == 'true' && null == $userInfo && !$app['session']->get('checklogin') && true) {
   	$app['session']->set('checklogin', true);
